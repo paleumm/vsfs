@@ -1,11 +1,4 @@
-#include "utils.c"
-
-#define MAXSIZE 4096
-
-typedef struct {
-    unsigned short size;
-    char bmap[80];
-} bitmap;
+#include "bitmap.h"
 
 bitmap _bmap_init(int size) {
     bitmap temp;
@@ -32,17 +25,14 @@ int _bmap_alloc(bitmap *_b) {
 }
 
 int _bmap_free(bitmap *_b, int idx) {
-    if(_b->bmap[idx] != 1) {
-        return -1;
-    }
+    assert(_b->bmap[idx] == 1);
     _b->bmap[idx] = 0;
 }
 
 int _bmap_markalloc(bitmap *_b, int idx) {
-    if(_b->bmap[idx] != 0) {
-        return -1;
-    }
+    assert(_b->bmap[idx] == 0);
     _b->bmap[idx] = 1;
+    return 0;
 }
 
 char *_bmap_dump(bitmap *_b) {
